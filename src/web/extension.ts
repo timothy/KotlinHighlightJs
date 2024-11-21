@@ -49,28 +49,25 @@ class KotlinHighlightJsEditorProvider implements vscode.CustomTextEditorProvider
 	}
 
 	private getHtmlForWebview(webview: vscode.Webview, code: string): string {
-		const escapedCode = code
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;');
 
 		return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
-  >
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/kotlin.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/base16/darcula.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/kotlin.min.js"></script>
   <script>
     hljs.highlightAll();
   </script>
 </head>
 <body>
-  <pre><code class="language-kotlin">${escapedCode}</code></pre>
+  <pre><code class="language-kotlin">${code}</code></pre>
+
+<script>
+   hljs.initHighlightingOnLoad();
+</script>
 </body>
 </html>`;
 	}
