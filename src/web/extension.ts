@@ -1,56 +1,57 @@
 import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(
-		vscode.window.registerCustomEditorProvider(
-			'kotlin.highlightjs.editor',
-			new KotlinHighlightJsEditorProvider(context),
-			{
-				webviewOptions: { retainContextWhenHidden: true },
-				supportsMultipleEditorsPerDocument: false
-			}
-		)
-	);
+    context.subscriptions.push(
+        vscode.window.registerCustomEditorProvider(
+            'kotlin.highlightjs.editor',
+            new KotlinHighlightJsEditorProvider(context),
+            {
+                webviewOptions: {retainContextWhenHidden: true},
+                supportsMultipleEditorsPerDocument: false
+            }
+        )
+    );
 }
 
 class KotlinHighlightJsEditorProvider implements vscode.CustomTextEditorProvider {
-	constructor(private readonly context: vscode.ExtensionContext) {}
+    constructor(private readonly context: vscode.ExtensionContext) {
+    }
 
-	public async resolveCustomTextEditor(
-		document: vscode.TextDocument,
-		webviewPanel: vscode.WebviewPanel,
-		_token: vscode.CancellationToken
-	): Promise<void> {
-		// Set up the initial content for the webview
-		webviewPanel.webview.options = { enableScripts: true };
+    public async resolveCustomTextEditor(
+        document: vscode.TextDocument,
+        webviewPanel: vscode.WebviewPanel,
+        _token: vscode.CancellationToken
+    ): Promise<void> {
+        // Set up the initial content for the webview
+        webviewPanel.webview.options = {enableScripts: true};
 
-		const updateWebview = () => {
-			webviewPanel.webview.html = this.getHtmlForWebview(
-				webviewPanel.webview,
-				document.getText()
-			);
-		};
+        const updateWebview = () => {
+            webviewPanel.webview.html = this.getHtmlForWebview(
+                webviewPanel.webview,
+                document.getText()
+            );
+        };
 
-		// Initial content
-		updateWebview();
+        // Initial content
+        updateWebview();
 
-		// Update the content when the document changes
-		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(
-			e => {
-				if (e.document.uri.toString() === document.uri.toString()) {
-					updateWebview();
-				}
-			}
-		);
+        // Update the content when the document changes
+        const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(
+            e => {
+                if (e.document.uri.toString() === document.uri.toString()) {
+                    updateWebview();
+                }
+            }
+        );
 
-		webviewPanel.onDidDispose(() => {
-			changeDocumentSubscription.dispose();
-		});
-	}
+        webviewPanel.onDidDispose(() => {
+            changeDocumentSubscription.dispose();
+        });
+    }
 
-	private getHtmlForWebview(webview: vscode.Webview, code: string): string {
+    private getHtmlForWebview(webview: vscode.Webview, code: string): string {
 
-		return `
+        return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,5 +71,5 @@ class KotlinHighlightJsEditorProvider implements vscode.CustomTextEditorProvider
 </script>
 </body>
 </html>`;
-	}
+    }
 }

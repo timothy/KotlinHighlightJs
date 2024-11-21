@@ -1,4 +1,4 @@
-# kotlin-highlightjs README
+# kotlin-darcula-syntax README
 
 ## Build the Extension
 ```shell

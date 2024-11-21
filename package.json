@@ -1,9 +1,10 @@
 {
-  "name": "kotlin-highlightjs",
-  "displayName": "kotlin-highlightjs",
-  "description": "Syntax highlighting for Kotlin using highlight.js",
+  "name": "kotlin-darcula-syntax",
+  "displayName": "kotlin-darcula-syntax",
+  "description": "Kotlin Darcula Syntax Highlighter",
   "version": "0.0.1",
-  "publisher": "tim b",
+  "publisher": "Hweean",
+  "repository": "https://github.com/timothy/KotlinHighlightJs",
   "engines": {
     "vscode": "^1.95.0"
   },
@@ -12,13 +13,15 @@
     "Syntax",
     "Kotlin"
   ],
-  "activationEvents": ["*"],
+  "activationEvents": [
+    "onCustomEditor:kotlin.highlightjs.editor"
+  ],
   "browser": "./dist/web/extension.js",
   "contributes": {
     "customEditors": [
       {
         "viewType": "kotlin.highlightjs.editor",
-        "displayName": "Kotlin Highlight.js Editor",
+        "displayName": "Kotlin Darcula Syntax Highlighter",
         "selector": [
           { "filenamePattern": "*.kt" },
           { "filenamePattern": "*.kts" }
