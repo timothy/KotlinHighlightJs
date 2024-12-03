@@ -49,6 +49,14 @@ class KotlinHighlightJsEditorProvider implements vscode.CustomTextEditorProvider
     }
 
     private getHtmlForWebview(webview: vscode.Webview, code: string): string {
+        // Get the local paths
+        const highlightJsPath = webview.asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'web', 'highlight.bundle.js')
+        );
+        const stylesPath = webview.asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'web', 'styles.css')
+        );
+
         // Escape the code to prevent XSS
         const escapedCode = this.escapeHtml(code);
         
@@ -57,10 +65,9 @@ class KotlinHighlightJsEditorProvider implements vscode.CustomTextEditorProvider
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} https://cdnjs.cloudflare.com; script-src ${webview.cspSource} https://cdnjs.cloudflare.com 'unsafe-inline';">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/base16/darcula.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/kotlin.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src ${webview.cspSource} 'unsafe-inline';">
+    <link rel="stylesheet" href="${stylesPath}">
+    <script src="${highlightJsPath}"></script>
 </head>
 <body>
     <pre><code class="language-kotlin">${escapedCode}</code></pre>
@@ -68,9 +75,6 @@ class KotlinHighlightJsEditorProvider implements vscode.CustomTextEditorProvider
     <script>
         // Wait for the DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', (event) => {
-            // Initialize highlight.js
-            hljs.configure({ languages: ['kotlin'] });
-            
             // Highlight all code blocks
             document.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightElement(block);

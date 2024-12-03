@@ -21,8 +21,12 @@
         "viewType": "kotlin.highlightjs.editor",
         "displayName": "Kotlin Darcula Syntax Highlighter",
         "selector": [
-          { "filenamePattern": "*.kt" },
-          { "filenamePattern": "*.kts" }
+          {
+            "filenamePattern": "*.kt"
+          },
+          {
+            "filenamePattern": "*.kts"
+          }
         ]
       }
     ]
@@ -36,6 +40,9 @@
     "package-web": "webpack --mode production --devtool hidden-source-map",
     "lint": "eslint src",
     "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
+  },
+  "dependencies": {
+    "highlight.js": "^11.10.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.89.1",
@@ -52,6 +59,9 @@
     "webpack-cli": "^5.1.4",
     "@types/webpack-env": "^1.18.5",
     "assert": "^2.1.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "style-loader": "^3.3.1"
   }
 }
