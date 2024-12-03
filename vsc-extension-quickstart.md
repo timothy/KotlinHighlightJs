@@ -20,3 +20,5 @@
 ```shell
   vsce package
 ```
+
+Publish to https://open-vsx.org/
