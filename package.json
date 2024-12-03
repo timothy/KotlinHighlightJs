@@ -2,20 +2,18 @@
   "name": "kotlin-darcula-syntax",
   "displayName": "kotlin-darcula-syntax",
   "description": "Kotlin Darcula Syntax Highlighter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "kotlin-darcula-syntax",
   "repository": "https://github.com/timothy/KotlinHighlightJs",
   "icon": "images/icon.png",
   "readme": "README.md",
   "engines": {
-    "vscode": "^1.95.0"
+    "vscode": "^1.89.1"
   },
   "categories": [
     "Programming Languages"
   ],
-  "activationEvents": [
-    "onCustomEditor:kotlin.highlightjs.editor"
-  ],
+  "activationEvents": [],
   "browser": "./dist/web/extension.js",
   "contributes": {
     "customEditors": [
@@ -40,7 +38,7 @@
     "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
   },
   "devDependencies": {
-    "@types/vscode": "^1.95.0",
+    "@types/vscode": "^1.89.1",
     "@types/mocha": "^10.0.9",
     "@types/assert": "^1.5.10",
     "eslint": "^9.13.0",
